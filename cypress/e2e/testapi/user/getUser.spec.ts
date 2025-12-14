@@ -38,5 +38,4 @@ describe('User API Tests', () => {
       expect(response.users[0]).to.have.property('lastName');
     });
   });
-});
-    
+});    
