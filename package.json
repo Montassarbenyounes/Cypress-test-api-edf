@@ -1,12 +1,18 @@
 {
   "name": "projet-cypress-07-decembre",
   "version": "1.0.0",
-  "description": "",
+  "description": "Cypress API tests for EDF services with TypeScript support",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cypress run",
+    "test:headless": "cypress run --headless",
+    "test:user": "cypress run --spec 'cypress/e2e/testapi/user/*.spec.ts'",
+    "test:carbon": "cypress run --spec 'cypress/e2e/testapi/simulateurEmprunt.spec.ts'",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "type-check": "tsc --noEmit --skipLibCheck"
   },
-  "keywords": [],
+  "keywords": ["cypress", "api-testing", "typescript", "edf"],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
