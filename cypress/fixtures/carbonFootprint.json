@@ -1,0 +1,46 @@
+{
+  "defaultRequest": {
+    "codeNaf": "47.11B",
+    "employeeNumber": 4,
+    "turnoverAmount": 200000,
+    "energies": {
+      "electric": {
+        "value": 20,
+        "units": "euro",
+        "recurrence": "yearly"
+      },
+      "fuel": {
+        "value": 20,
+        "units": "euro",
+        "recurrence": "yearly"
+      },
+      "gaz": {
+        "value": 20,
+        "units": "euro",
+        "recurrence": "yearly"
+      }
+    },
+    "realestates": {
+      "type": "building",
+      "age": "new",
+      "surface": 50
+    },
+    "transports": {
+      "vehicles": {
+        "value": 4,
+        "units": "km",
+        "recurrence": "yearly"
+      },
+      "public": {
+        "value": 1,
+        "units": "km",
+        "recurrence": "yearly"
+      },
+      "flights": {
+        "value": 1,
+        "units": "km",
+        "recurrence": "yearly"
+      }
+    }
+  }
+}
