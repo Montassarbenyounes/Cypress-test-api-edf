@@ -7,7 +7,7 @@ const navigationMenu = new NavigationMenuComponent();
 describe('Navbar - Vérification du style', () => {
 
   beforeEach(() => {
-    cy.visit('/');          // baseUrl = https://automationexercise.com/
+    cy.visit('https://automationexercise.com/');          // Site de test
   });
 
   it('Vérifier les styles du navbar', () => {

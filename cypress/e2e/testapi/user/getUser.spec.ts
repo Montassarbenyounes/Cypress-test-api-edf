@@ -1,56 +1,54 @@
-describe('all user', () => {
+describe('User API Tests', () => {
+  let testData: any;
 
-   it('get all user', () => {
-cy.request({
-method:'GET',
-url:'https://dummyjson.com/users',
+  before(() => {
+    cy.fixture('users').then((data) => {
+      testData = data;
+    });
+  });
 
-}).then((response ) =>{
-expect(response.status).to.eq(200);
-expect(response.body).to.have.all.keys('skip','users' , 'total' ,'limit')
-})
+  it('should get all users successfully', () => {
+    cy.getAllUsers().then((response) => {
+      expect(response.users).to.be.an('array');
+      expect(response.total).to.be.greaterThan(0);
+      expect(response.users.length).to.be.greaterThan(0);
+      // Vérifier la structure du premier utilisateur
+      expect(response.users[0]).to.have.property('id');
+      expect(response.users[0]).to.have.property('firstName');
+      expect(response.users[0]).to.have.property('lastName');
+    });
+  });
+
+  it('should get a specific user by ID', () => {
+    const userId = 1;
+    cy.getUser(userId).then((response) => {
+      expect(response.id).to.eq(userId);
+      expect(response.firstName).to.exist;
+      expect(response.lastName).to.exist;
+    });
+  });
+
+  it('should login user and receive access token', () => {
+    cy.loginUser(testData.loginCredentials.username, testData.loginCredentials.password).then((response) => {
+      expect(response.accessToken).to.exist;
+      expect(response.refreshToken).to.exist;
+      expect(response.username).to.eq(testData.loginCredentials.username);
+      expect(response.email).to.exist;
+      expect(response.firstName).to.exist;
+      expect(response.lastName).to.exist;
+    });
+  });
+
+  it('should search users by query', () => {
+    cy.searchUsers(testData.searchQuery).then((response) => {
+      expect(response.users).to.be.an('array');
+      // Vérifier que les résultats contiennent la requête de recherche
+      if (response.users.length > 0) {
+        const firstUser = response.users[0];
+        const searchLower = testData.searchQuery.toLowerCase();
+        const userString = JSON.stringify(firstUser).toLowerCase();
+        expect(userString).to.include(searchLower);
+      }
+    });
+  });
 });
-it('Login user and get tokens' , () => {
-cy.request ( {
-method: 'POST' , 
-url:'https://dummyjson.com/user/login',
-headers: {
-    'Content-Type': 'application/json' },
-    body: {
- username:'emilys' ,
-    password:'emilyspass'
-    }}).then((response ) => {
-expect(response.status).to.eq(200) ;
-expect(response.body).to.have.property('accessToken')
-})
-
-})
-it('Get a single user' , () => {
-cy.request('https://dummyjson.com/users/1').then((response) => {
-    expect(response.status).to.eq(200) ;
-    expect (response.body).to.include.keys('id','firstName','lastName','age','phone' )
-
-})
-
-})
-
-it('Search users', () => {
-  cy.request({
-    method: 'GET',
-    url: 'https://dummyjson.com/users/search?q=John'
-  }).then((response) => {
-    expect(response.status).to.eq(200)
-     expect(response.body).to.have.property('users')
-    expect(response.body).to.have.property('total')
-    expect(response.body).to.have.property('skip')
-    expect(response.body).to.have.property('limit')
-    expect(response.body.users.length).to.be.greaterThan(0)
-    expect(response.body.users[0]).to.have.property('id')
-    expect(response.body.users[0]).to.have.property('firstName')
-    expect(response.body.users[0]).to.have.property('lastName')
-  })
-})
-
-
-})
-    

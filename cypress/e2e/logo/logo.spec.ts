@@ -9,7 +9,7 @@ describe('Logo - Vérification du style (fusion des 2 méthodes)', () => {
   context('Desktop logo', () => {
 
     beforeEach(() => {
-      cy.visit('/');
+      cy.visit('https://automationexercise.com/');
     });
 
     // 1️⃣ MÉTHODE 1 : .should() (simple et lisible)
